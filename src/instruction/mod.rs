@@ -140,13 +140,13 @@ pub enum Instruction {
 		comparison_value: bool,
 	},
 	Test {
-		lhs: Register,
-		rhs: Register,
+		value: Register,
+		comparison_value: bool,
 	},
 	TestSet {
 		destination: Register,
-		lhs: Register,
-		rhs: Register,
+		value: Register,
+		comparison_value: bool,
 	},
 	Call {
 		function: Register,
@@ -304,13 +304,13 @@ impl Instruction {
 				comparison_value: a == 1,
 			},
 			RawInstruction(OperationCode::Test, Layout::ABC { a, c, .. }) => Self::Test {
-				lhs: Register(a),
-				rhs: Register(c),
+				value: Register(a),
+				comparison_value: c == 1,
 			},
 			RawInstruction(OperationCode::TestSet, Layout::ABC { a, b, c }) => Self::TestSet {
 				destination: Register(a),
-				lhs: Register(b),
-				rhs: Register(c),
+				value: Register(b),
+				comparison_value: c == 1,
 			},
 			RawInstruction(OperationCode::Call, Layout::ABC { a, b, c }) => Self::Call {
 				function: Register(a),
